@@ -1,9 +1,8 @@
-module "EC2"
-{
-  source = "./EC2"
+module "EC2" {
+  source = "./Modules/EC2"
 
   environment = var.environment
-  region = var.region
-  ami = var.ami
-  type = var.type
+  region      = var.region
+  ami         = var.ami
+  type        = var.type
 }
