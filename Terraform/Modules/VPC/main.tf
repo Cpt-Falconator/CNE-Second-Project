@@ -24,6 +24,25 @@ resource "aws_subnet" "Pub_Sub" {
   }
 }
 
+resource "aws_subnet" "Pri_Sub" {
+  vpc_id                  = aws_vpc.project_VPC.id
+  availability_zone       = "eu-west-1a"
+  cidr_block              = "13.37.2.0/24"
+  tags = {
+    "Project" : "Second"
+  }
+}
+
+resource "aws_db_subnet_group" "DB_Subnet" {
+  name       = "db_subnet"
+  subnet_ids = [aws_subnet.Pri_Sub.id, aws_subnet.Pub_Sub.id]
+
+  tags = {
+    "Name" : "Project_DB_Subnet"
+    "Project" : "Second"
+  }
+}
+
 resource "aws_security_group" "Project_Jenkins_SG" {
   name        = "Project-Jenkins-SG"
   description = "Allow ssh"

@@ -8,4 +8,7 @@ resource "aws_db_instance" "TestingDB" {
   username             = "FalconTest"
   password             = "MWAMDATABASE"
   parameter_group_name = "default.mysql5.7"
+  db_subnet_group_name = var.DB_Subnet_Name
+
 }
+
