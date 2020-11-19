@@ -1,0 +1,7 @@
+#Ignore files with these extentions
+*.tfvars
+*.tfstate*
+*.log
+
+#Ignore these specific files
+.terraform
