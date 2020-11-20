@@ -57,7 +57,7 @@ resource "aws_security_group" "Project_Jenkins_SG" {
   }
 
   ingress {
-    description = "Http from VPC"
+    description = "Jenkins access"
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"

@@ -11,10 +11,6 @@ resource "aws_instance" "JenkinsMachine" {
     subnet_id    = var.VPC_Subnet_id
     key_name = aws_key_pair.testing_EC2.key_name
 
-    provisioner "local-exec" {
-    command = "echo '*Run Ansible Here*'"
-    }
-
     provisioner "remote-exec" {
     connection {
       type        = "ssh"
@@ -25,11 +21,13 @@ resource "aws_instance" "JenkinsMachine" {
     }
 
     inline = [
-      "sudo apt update",
-      "echo 'Hacker voice *Im in*'",
-      "ip addr show"
+        "sudo apt update"
     ]
   }
+
+    provisioner "local-exec" {
+    command = "ansible-playbook playbook.yaml -e '{VM_IP: ${self.public_ip}}' -i '${self.public_ip},'"
+    }
 
     tags = {
     "Name" : "Second Project JenkinsVM"
