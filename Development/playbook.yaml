@@ -3,45 +3,56 @@
   vars_files:
     - ./vars.yaml
   tasks:
-  - name: copy SSH key
-    copy:
-      src: ~/.ssh/task_setup_key.pub
-      dest: ~/.ssh/authorized_keys
-  - name: Install aptitude using apt
-    apt: 
-      name: aptitude
-      state: latest
-      update_cache: yes
-      force_apt_get: yes
-  - name: Install required system packages
-    apt: 
-      name: "{{ item }}"
-      state: latest
-      update_cache: yes
-    loop: [ 'git', 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
-  - name: Add Docker GPG apt Key
-    apt_key:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      state: present
-  - name: Add Docker Repository
-    apt_repository:
-      repo: deb https://download.docker.com/linux/ubuntu bionic stable
-      state: present
-  - name: Update apt and install docker-ce
-    apt:
-      update_cache: yes
-      name: docker-ce
-      state: latest
-  - name: Install Docker Module for Python
-    pip:
-      name: docker
-  - name: Download install scripts
-    git:
-      repo: 'https://github.com/Cpt-Falconator/Install-scripts.git'
-      dest: /home/ubuntu/scripts/
-      update: yes
-  - name: Install Jenkins
-    command: bash /home/ubuntu/scripts/jenkins-install.sh
-    register: JENKINS_PASSWORD
-  - debug:
-      var: JENKINS_PASSWORD.stdout_lines
+    - name: copy SSH key
+      copy:
+        src: ~/.ssh/task_setup_key.pub
+        dest: ~/.ssh/authorized_keys
+    - name: Install aptitude using apt
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: yes
+        force_apt_get: yes
+    - name: Install required system packages
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: yes
+      loop:
+        [
+          "git",
+          "apt-transport-https",
+          "ca-certificates",
+          "curl",
+          "software-properties-common",
+          "python3-pip",
+          "virtualenv",
+          "python3-setuptools",
+          "mysql-client"
+        ]
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+    - name: Update apt and install docker-ce
+      apt:
+        update_cache: yes
+        name: docker-ce
+        state: latest
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+    - name: Download install scripts
+      git:
+        repo: "https://github.com/Cpt-Falconator/Install-scripts.git"
+        dest: /home/ubuntu/scripts/
+        update: yes
+    - name: Install Jenkins
+      command: bash /home/ubuntu/scripts/jenkins-install.sh
+      register: JENKINS_PASSWORD
+    - debug:
+        var: JENKINS_PASSWORD.stdout_lines

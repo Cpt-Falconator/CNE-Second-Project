@@ -72,6 +72,14 @@ resource "aws_security_group" "Project_Jenkins_SG" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "Mysql access"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -101,5 +109,10 @@ resource "aws_route_table" "project_RT" {
 
 resource "aws_route_table_association" "a" {
   subnet_id      = aws_subnet.Pub_Sub.id
+  route_table_id = aws_route_table.project_RT.id
+}
+
+resource "aws_route_table_association" "b" {
+  subnet_id      = aws_subnet.Pri_Sub.id
   route_table_id = aws_route_table.project_RT.id
 }
