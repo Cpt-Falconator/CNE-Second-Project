@@ -28,7 +28,8 @@
           "python3-pip",
           "virtualenv",
           "python3-setuptools",
-          "mysql-client"
+          "mysql-client",
+          "jq"
         ]
     - name: Add Docker GPG apt Key
       apt_key:
@@ -51,6 +52,8 @@
         repo: "https://github.com/Cpt-Falconator/Install-scripts.git"
         dest: /home/ubuntu/scripts/
         update: yes
+    - name: Install Docker-Compose
+      command: bash /home/ubuntu/scripts/docker-compose-install.sh
     - name: Install Jenkins
       command: bash /home/ubuntu/scripts/jenkins-install.sh
       register: JENKINS_PASSWORD
