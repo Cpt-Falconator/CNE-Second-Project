@@ -38,3 +38,11 @@ module "RDS-Testing" {
   VPC_SG_id     = module.VPC.VPC_SG_id
   DB_Subnet_Name = module.VPC.DB_Subnet_Name
 }
+
+module "EKS" {
+  source = "./Modules/EKS"
+
+  SG_id = module.VPC.VPC_SG_id
+  Pub_Sub_id = module.VPC.VPC_PubSub_id
+  Pri_Sub_id = module.VPC.VPC_PriSub_id
+}
