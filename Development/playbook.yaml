@@ -50,12 +50,16 @@
     - name: Download install scripts
       git:
         repo: "https://github.com/Cpt-Falconator/Install-scripts.git"
-        dest: /home/ubuntu/scripts/
+        dest: ./scripts/
         update: yes
     - name: Install Docker-Compose
-      command: bash /home/ubuntu/scripts/docker-compose-install.sh
+      command: bash ./scripts/docker-compose-install.sh
+    - name: Install AWS-CLI
+      command: bash ./scripts/k8-install.sh
+    - name: Install K8
+      command: bash ./scripts/aws-cli-install.sh
     - name: Install Jenkins
-      command: bash /home/ubuntu/scripts/jenkins-install.sh
+      command: bash ./scripts/jenkins-install.sh
       register: JENKINS_PASSWORD
     - debug:
         var: JENKINS_PASSWORD.stdout_lines

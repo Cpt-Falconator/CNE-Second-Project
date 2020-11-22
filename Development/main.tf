@@ -27,7 +27,7 @@ module "VPC" {
 module "RDS-Deployment" {
   source = "./Modules/RDS/Deployment"
 
-  VPC_SG_id     = module.VPC.VPC_SG_id
+  VPC_SG_id      = module.VPC.VPC_SG_id
   DB_Subnet_Name = module.VPC.DB_Subnet_Name
 
 }
@@ -35,14 +35,15 @@ module "RDS-Deployment" {
 module "RDS-Testing" {
   source = "./Modules/RDS/Testing"
 
-  VPC_SG_id     = module.VPC.VPC_SG_id
+  VPC_SG_id      = module.VPC.VPC_SG_id
   DB_Subnet_Name = module.VPC.DB_Subnet_Name
 }
 
 module "EKS" {
   source = "./Modules/EKS"
 
-  SG_id = module.VPC.VPC_SG_id
+  SG_id      = module.VPC.VPC_SG_id
   Pub_Sub_id = module.VPC.VPC_PubSub_id
   Pri_Sub_id = module.VPC.VPC_PriSub_id
+  Node_Subnet_ids = [module.VPC.VPC_PubSub_id,module.VPC.VPC_PriSub_id]
 }

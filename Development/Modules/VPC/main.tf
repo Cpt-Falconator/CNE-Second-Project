@@ -21,6 +21,7 @@ resource "aws_subnet" "Pub_Sub" {
   map_public_ip_on_launch = true
   tags = {
     "Project" : "Second"
+    "kubernetes.io/cluster/projectcluster" : "shared"
   }
 }
 
@@ -28,8 +29,10 @@ resource "aws_subnet" "Pri_Sub" {
   vpc_id                  = aws_vpc.project_VPC.id
   availability_zone       = "eu-west-1a"
   cidr_block              = "13.37.2.0/24"
+  map_public_ip_on_launch = true
   tags = {
     "Project" : "Second"
+    "kubernetes.io/cluster/projectcluster" : "shared"
   }
 }
 

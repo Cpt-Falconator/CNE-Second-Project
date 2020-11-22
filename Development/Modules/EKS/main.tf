@@ -1,10 +1,10 @@
 resource "aws_eks_cluster" "Development_EKS" {
-  name     = "CNE_SIFA2_EKS"
+  name     = "projectcluster"
   role_arn = var.role_arn
 
   vpc_config {
     subnet_ids = [var.Pub_Sub_id, var.Pri_Sub_id]
-    security_group_ids = var.SG_id
+    security_group_ids = [var.SG_id,]
   }
 
   tags = {
@@ -16,9 +16,9 @@ resource "aws_eks_cluster" "Development_EKS" {
 
 resource "aws_eks_node_group" "node" {
   cluster_name    = aws_eks_cluster.Development_EKS.name
-  node_group_name = "SIFA2 Nodes"
+  node_group_name = "projectnodes"
   node_role_arn   = var.node_arn
-  subnet_ids      = [var.Pub_Sub_id, var.Pri_Sub_id]
+  subnet_ids      = var.Node_Subnet_ids
   ami_type = var.ami_type
   instance_types = var.instance_types
 
